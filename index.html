@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Surprise For You ✨</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#08080d;color:#fff;
+ font-family:Georgia,serif;text-align:center;
+ overflow-x:hidden;
+}
+.stars{
+ position:fixed;inset:0;pointer-events:none;
+ background-image:
+ radial-gradient(white 1px,transparent 1px),
+ radial-gradient(#aaa 1px,transparent 1px);
+ background-size:90px 90px,150px 150px;
+ background-position:0 0,40px 60px;
+ opacity:.35;z-index:-1;
+}
+section{
+ min-height:100vh;padding:65px 20px;
+ display:flex;flex-direction:column;
+ justify-content:center;align-items:center;
+}
+h1{font-size:38px;font-weight:normal}
+h2{font-size:29px;font-weight:normal}
+p{color:#c6c3ce;line-height:1.8}
+input{
+ background:#171720;color:white;
+ border:1px solid #777;padding:14px;
+ border-radius:10px;font-size:16px;
+ text-align:center;width:230px;
+}
+button{
+ background:#d8c4a0;color:#17120e;
+ border:0;border-radius:30px;
+ padding:13px 27px;margin:12px;
+ font-size:15px;cursor:pointer;
+}
+button:hover{opacity:.8}
+.hidden{display:none!important}
+.letter{
+ max-width:450px;padding:30px;
+ background:#15141b;border:1px solid #62566a;
+ border-radius:15px;line-height:2;
+ box-shadow:0 0 30px #30213d;
+}
+.gallery{
+ display:grid;grid-template-columns:1fr 1fr;
+ gap:12px;max-width:480px;width:100%;
+}
+.gallery img{
+ width:100%;height:210px;
+ object-fit:cover;border-radius:12px;
+ border:1px solid #555;
+}
+.small{font-size:13px;color:#999}
+#message{color:#e5cda7}
+</style>
+</head>
+
+<body>
+<div class="stars"></div>
+
+<!-- SCREEN 1: LOCK -->
+<section id="lock">
+ <p>✦ A LITTLE SOMETHING FOR YOU ✦</p>
+ <h1>Something special awaits...</h1>
+ <p>Only you can unlock this little surprise.</p>
+ <input id="password" type="password"
+ placeholder="Enter secret password">
+ <button onclick="unlock()">Unlock ✨</button>
+ <p id="message"></p>
+ <p class="small">Made with a little love ♡</p>
+</section>
+
+<!-- SCREEN 2: WELCOME -->
+<section id="welcome" class="hidden">
+ <p>✦ THE WAIT IS OVER ✦</p>
+ <h1>Happy Birthday! ♡</h1>
+ <p>Today is all about you.</p>
+ <button onclick="show('memories')">Open your surprise →</button>
+</section>
+
+<!-- SCREEN 3: PHOTOS -->
+<section id="memories" class="hidden">
+ <p>✦ LITTLE MOMENTS, BIG MEMORIES ✦</p>
+ <h2>Memories Gallery</h2>
+ <p>A few moments worth keeping forever.</p>
+ <div class="gallery">
+  <img src="photo1.jpg" alt="Memory 1">
+  <img src="photo2.jpg" alt="Memory 2">
+  <img src="photo3.jpg" alt="Memory 3">
+  <img src="photo4.jpg" alt="Memory 4">
+ </div>
+ <button onclick="show('letter')">Read your letter 💌</button>
+</section>
+
+<!-- SCREEN 4: LETTER -->
+<section id="letter" class="hidden">
+ <p>✦ WORDS JUST FOR YOU ✦</p>
+ <div class="letter">
+  <h2>Dear You, ♡</h2>
+  <p>
+   Happiest Birthday to you! 
+   I hope your day is filled with happiness,
+   beautiful memories and endless smiles.
+   You deserve all the good things life has
+   to offer. Keep being the wonderful person
+   you are. May this new chapter bring you
+   everything you've been wishing for.
+  </p>
+  <p>Stay happy, keep smiling and enjoy your day!</p>
+  <p>With lots of wishes ♡</p>
+ </div>
+ <button onclick="show('gift')">One last surprise →</button>
+</section>
+
+<!-- SCREEN 5: GIFT QUESTION -->
+<section id="gift" class="hidden">
+ <p>✦ THE LAST LITTLE THING ✦</p>
+ <h1>One question...</h1>
+ <h2>What gift do you want from me? 🎁</h2>
+ <p>I'm listening. Tell me your wish!</p>
+ <input id="answer" type="text"
+ placeholder="Your answer...">
+ <button onclick="submitAnswer()">Send my wish ♡</button>
+ <p id="thanks"></p>
+ <p class="small">Hope this made you smile ✨</p>
+</section>
+
+<audio id="music" loop>
+ <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const SECRET_PASSWORD = "1234";
+
+function unlock(){
+ const entered=document.getElementById("password").value;
+ if(entered===SECRET_PASSWORD){
+  show("welcome");
+  document.getElementById("music").play().catch(()=>{});
+ }else{
+  document.getElementById("message").textContent=
+  "Oops! Try the secret code again ♡";
+ }
+}
+
+function show(id){
+ document.querySelectorAll("section").forEach(s=>
+ s.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
+ window.scrollTo(0,0);
+}
+
+function submitAnswer(){
+ const answer=document.getElementById("answer").value.trim();
+ if(!answer){
+  document.getElementById("thanks").textContent=
+  "Tell me your wish first ♡";
+  return;
+ }
+ document.getElementById("thanks").textContent=
+ "Your wish has been noted! ♡";
+}
+</script>
+</body>
+</html>
